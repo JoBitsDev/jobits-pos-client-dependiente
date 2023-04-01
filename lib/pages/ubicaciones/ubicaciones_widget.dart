@@ -58,6 +58,7 @@ class _UbicacionesWidgetState extends State<UbicacionesWidget> {
       FFAppState().ubicacion,
       r'''$.password''',
     ).toString().toString());
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -88,7 +89,7 @@ class _UbicacionesWidgetState extends State<UbicacionesWidget> {
             size: 30.0,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -558,7 +559,7 @@ class _UbicacionesWidgetState extends State<UbicacionesWidget> {
                         ),
                       );
                       // on_guardar_ubicacion_click
-                      Navigator.pop(context);
+                      context.pop();
 
                       setState(() {});
                     },

@@ -2,8 +2,6 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/pages/select_area/select_area_widget.dart';
-import '/pages/ubicaciones/ubicaciones_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -87,6 +85,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
     _model.emailAddressController ??= TextEditingController();
     _model.passwordController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -373,12 +372,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               (_model.apiResult5xm?.jsonBody ?? ''),
                               r'''$.Token''',
                             ).toString();
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SelectAreaWidget(),
-                              ),
-                            );
+
+                            context.pushNamed('selectArea');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -436,12 +431,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
                       child: InkWell(
                         onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UbicacionesWidget(),
-                            ),
-                          );
+                          context.pushNamed('ubicaciones');
                         },
                         child: Icon(
                           Icons.settings_outlined,

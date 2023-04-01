@@ -32,6 +32,8 @@ class _TableStatusWidgetState extends State<TableStatusWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TableStatusModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -63,7 +65,7 @@ class _TableStatusWidgetState extends State<TableStatusWidget> {
             size: 30.0,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(

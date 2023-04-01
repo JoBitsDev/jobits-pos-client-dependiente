@@ -2,7 +2,6 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/pages/table_status/table_status_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,6 +26,8 @@ class _SelectAreaWidgetState extends State<SelectAreaWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SelectAreaModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -58,7 +59,7 @@ class _SelectAreaWidgetState extends State<SelectAreaWidget> {
             size: 30.0,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -123,13 +124,14 @@ class _SelectAreaWidgetState extends State<SelectAreaWidget> {
                               final areasItem = areas[areasIndex];
                               return InkWell(
                                 onTap: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => TableStatusWidget(
-                                        areaSelected: areasItem.toString(),
+                                  context.pushNamed(
+                                    'tableStatus',
+                                    queryParams: {
+                                      'areaSelected': serializeParam(
+                                        areasItem.toString(),
+                                        ParamType.String,
                                       ),
-                                    ),
+                                    }.withoutNulls,
                                   );
                                 },
                                 child: Text(
