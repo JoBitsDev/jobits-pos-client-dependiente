@@ -1,0 +1,1 @@
+# jobits-pos-client-dependiente
