@@ -46,15 +46,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
           r'''$.id_base_datos''',
         ),
       );
-      FFAppState().update(() {
-        FFAppState().tennantHeader = getJsonField(
-          (_model.tennantResponse?.jsonBody ?? ''),
-          r'''$.token''',
-        ).toString().toString();
-      });
       if (!(_model.tennantResponse?.succeeded ?? true)) {
-        FFAppState().update(() {
+        setState(() {
           FFAppState().estadoConexion = 'Conectado';
+          FFAppState().tennantHeader = getJsonField(
+            (_model.tennantResponse?.jsonBody ?? ''),
+            r'''$.token''',
+          ).toString().toString();
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -69,7 +67,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
           ),
         );
       } else {
-        FFAppState().update(() {
+        setState(() {
           FFAppState().estadoConexion = 'Sin Conexión';
         });
         ScaffoldMessenger.of(context).showSnackBar(
@@ -360,12 +358,47 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     children: [
                       FFButtonWidget(
                         onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SelectAreaWidget(),
-                            ),
+                          var _shouldSetState = false;
+                          _model.apiResult5xm = await DoAuthenticationCall.call(
+                            host: getJsonField(
+                              FFAppState().ubicacion,
+                              r'''$.host''',
+                            ).toString(),
+                            tennantToken: FFAppState().tennantHeader,
+                            basicToken: FFAppState().tokenHeader,
                           );
+                          _shouldSetState = true;
+                          if ((_model.apiResult5xm?.succeeded ?? true)) {
+                            FFAppState().tokenHeader = getJsonField(
+                              (_model.apiResult5xm?.jsonBody ?? ''),
+                              r'''$.Token''',
+                            ).toString();
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SelectAreaWidget(),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Credenciales Incorrectas',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                            if (_shouldSetState) setState(() {});
+                            return;
+                          }
+
+                          if (_shouldSetState) setState(() {});
                         },
                         text: 'Continuar',
                         options: FFButtonOptions(

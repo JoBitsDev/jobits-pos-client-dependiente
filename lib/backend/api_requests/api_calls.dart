@@ -72,7 +72,7 @@ class GetListaMesasDeAreaCall {
   static Future<ApiCallResponse> call({
     String? host = '',
     String? tennantToken = '',
-    String? basicToken = '',
+    String? bearerToken = '',
     String? area = '',
   }) {
     return ApiManager.instance.makeApiCall(
@@ -81,7 +81,30 @@ class GetListaMesasDeAreaCall {
       callType: ApiCallType.GET,
       headers: {
         'Tennant': '${tennantToken}',
-        'Authorization': 'Basic ${basicToken}',
+        'Authorization': 'Bearer ${bearerToken}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class GetListaAreaVentaCall {
+  static Future<ApiCallResponse> call({
+    String? host = '',
+    String? tennantToken = '',
+    String? bearerToken = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getListaAreaVenta',
+      apiUrl: 'http://${host}/jobits/pos/area-venta/list/names',
+      callType: ApiCallType.GET,
+      headers: {
+        'Tennant': '${tennantToken}',
+        'Authorization': 'Bearer ${bearerToken}',
       },
       params: {},
       returnBody: true,

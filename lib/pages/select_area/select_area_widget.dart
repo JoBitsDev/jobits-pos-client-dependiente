@@ -1,6 +1,8 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/pages/table_status/table_status_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -79,21 +81,66 @@ class _SelectAreaWidgetState extends State<SelectAreaWidget> {
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Builder(
-                    builder: (context) {
-                      final areas =
-                          _model.listaAreas.toList().take(10).toList();
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: areas.length,
-                        itemBuilder: (context, areasIndex) {
-                          final areasItem = areas[areasIndex];
-                          return Container(
-                              width: 100, height: 100, color: Colors.green);
+                  FutureBuilder<ApiCallResponse>(
+                    future: GetListaAreaVentaCall.call(
+                      host: getJsonField(
+                        FFAppState().ubicacion,
+                        r'''$.host''',
+                      ).toString(),
+                      tennantToken: FFAppState().tennantHeader,
+                      bearerToken: FFAppState().tokenHeader,
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: SpinKitFadingCube(
+                              color: FlutterFlowTheme.of(context).primary,
+                              size: 50.0,
+                            ),
+                          ),
+                        );
+                      }
+                      final listViewGetListaAreaVentaResponse = snapshot.data!;
+                      return Builder(
+                        builder: (context) {
+                          final areas = listViewGetListaAreaVentaResponse
+                              .jsonBody
+                              .toList()
+                              .take(10)
+                              .toList();
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: areas.length,
+                            itemBuilder: (context, areasIndex) {
+                              final areasItem = areas[areasIndex];
+                              return InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => TableStatusWidget(
+                                        areaSelected: areasItem.toString(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  '',
+                                  textAlign: TextAlign.center,
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
+                                ),
+                              );
+                            },
+                          );
                         },
                       );
                     },

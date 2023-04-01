@@ -130,12 +130,12 @@ class _TableStatusWidgetState extends State<TableStatusWidget> {
                   FutureBuilder<ApiCallResponse>(
                     future: GetListaMesasDeAreaCall.call(
                       tennantToken: FFAppState().tennantHeader,
-                      basicToken: FFAppState().tokenHeader,
                       host: getJsonField(
                         FFAppState().ubicacion,
                         r'''$.host''',
                       ).toString(),
                       area: widget.areaSelected,
+                      bearerToken: FFAppState().tokenHeader,
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
