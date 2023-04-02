@@ -16,13 +16,13 @@ dynamic converTextFieldsToJson(
   String? usuario,
   String? password,
 ) {
+  // convert text widgets to return a json
   return {
-    '"nombre"': '"$nombre"',
-    '"host"': '"$host"',
-    '"id_usuario"': '"$idUsuario"',
-    '"usuario"': '"$usuario"',
-    '"password"': '"$password"',
-    '"id_base_datos"': '"$idBaseDatos"'
+    'nombre': nombre,
+    'host': host,
+    'id_base_datos': idBaseDatos,
+    'id_usuario': idUsuario,
+    'usuario': usuario,
+    'password': password,
   };
-  // Add your function code here!
 }

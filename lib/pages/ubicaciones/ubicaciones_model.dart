@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -31,8 +30,6 @@ class UbicacionesModel extends FlutterFlowModel {
   TextEditingController? passwordController;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordControllerValidator;
-  // Stores action output result for [Backend Call - API (getTennantToken)] action in Button widget.
-  ApiCallResponse? tennantResponse;
 
   /// Initialization and disposal methods.
 

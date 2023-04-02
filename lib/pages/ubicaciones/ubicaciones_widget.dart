@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -509,59 +508,18 @@ class _UbicacionesWidgetState extends State<UbicacionesWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      FFAppState().update(() {
-                        FFAppState().ubicacion =
-                            functions.converTextFieldsToJson(
-                                valueOrDefault<String>(
-                                  _model.nombreController.text,
-                                  'SERVIDOR',
-                                ),
-                                valueOrDefault<String>(
-                                  _model.urlController.text,
-                                  '192.168.173.1:8080',
-                                ),
-                                int.tryParse(_model.idBaseDatosController.text),
-                                int.tryParse(_model.idUsuarioController.text),
-                                valueOrDefault<String>(
-                                  _model.idUsuarioController.text,
-                                  'admin',
-                                ),
-                                valueOrDefault<String>(
-                                  _model.passwordController.text,
-                                  '1234',
-                                ));
-                      });
-                      _model.tennantResponse = await GetTennantTokenCall.call(
-                        host: _model.urlController.text,
-                        idCuenta: int.tryParse(_model.idUsuarioController.text),
-                        idBaseDatos:
+                      FFAppState().ubicacion = getJsonField(
+                        functions.converTextFieldsToJson(
+                            _model.nombreController.text,
+                            _model.urlController.text,
                             int.tryParse(_model.idBaseDatosController.text),
-                      );
-                      FFAppState().update(() {
-                        FFAppState().tennantHeader = valueOrDefault<String>(
-                          getJsonField(
-                            (_model.tennantResponse?.jsonBody ?? ''),
-                            r'''$.token''',
-                          ).toString(),
-                          'Empty',
-                        );
-                      });
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Datos guardados exitosamente',
-                            style: TextStyle(
-                              color: Color(0x00000000),
-                            ),
-                          ),
-                          duration: Duration(milliseconds: 4000),
-                          backgroundColor: Color(0x00000000),
-                        ),
+                            int.tryParse(_model.idUsuarioController.text),
+                            _model.usuarioController.text,
+                            _model.passwordController.text),
+                        r'''$''',
                       );
                       // on_guardar_ubicacion_click
                       context.pop();
-
-                      setState(() {});
                     },
                     text: 'Guardar',
                     options: FFButtonOptions(
