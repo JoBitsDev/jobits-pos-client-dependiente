@@ -26,3 +26,18 @@ dynamic converTextFieldsToJson(
     'password': password,
   };
 }
+
+String? genereateBasicTokenFromUserAndPass(
+  String? user,
+  String? password,
+) {
+  // create a base64 credential
+  String? basicAuth = 'Basic ' + base64Encode(utf8.encode('$user:$password'));
+  return basicAuth;
+}
+
+String? splitBySpace(String stringToSplit) {
+  // split a string by space and return first argument
+  List<String> list = stringToSplit.split(' ');
+  return list[0];
+}

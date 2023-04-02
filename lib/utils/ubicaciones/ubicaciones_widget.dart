@@ -21,6 +21,7 @@ class _UbicacionesWidgetState extends State<UbicacionesWidget> {
   late UbicacionesModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -64,6 +65,7 @@ class _UbicacionesWidgetState extends State<UbicacionesWidget> {
   void dispose() {
     _model.dispose();
 
+    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -73,7 +75,7 @@ class _UbicacionesWidgetState extends State<UbicacionesWidget> {
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).lineColor,
+      backgroundColor: FlutterFlowTheme.of(context).tertiary,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primary,
         automaticallyImplyLeading: false,
@@ -103,7 +105,8 @@ class _UbicacionesWidgetState extends State<UbicacionesWidget> {
         centerTitle: false,
         elevation: 2.0,
       ),
-      body: SafeArea(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
           child: Column(

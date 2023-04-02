@@ -34,7 +34,7 @@ class GetTennantTokenCall {
           'http://${host}/jobits/tennant/cuenta/${idCuenta}/token-for/${idBaseDatos}',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Basic ${basicToken}',
+        'Authorization': '${basicToken}',
       },
       params: {},
       returnBody: true,
@@ -78,6 +78,104 @@ class GetListaMesasDeAreaCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getListaMesasDeArea',
       apiUrl: 'http://${host}/jobits/pos/area-venta/${area}/list-mesas',
+      callType: ApiCallType.GET,
+      headers: {
+        'Tennant': '${tennantToken}',
+        'Authorization': 'Bearer ${bearerToken}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class OrdenValidateCall {
+  static Future<ApiCallResponse> call({
+    String? host = '',
+    String? tennantToken = '',
+    String? bearerToken = '',
+    String? codOrden = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'ordenValidate',
+      apiUrl: 'http://${host}/jobits/pos/orden/${codOrden}/validate',
+      callType: ApiCallType.GET,
+      headers: {
+        'Tennant': '${tennantToken}',
+        'Authorization': 'Bearer ${bearerToken}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class VentaResolveAbiertaCall {
+  static Future<ApiCallResponse> call({
+    String? host = '',
+    String? tennantToken = '',
+    String? bearerToken = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'ventaResolveAbierta',
+      apiUrl: 'http://${host}/jobits/pos/venta-list/venta-abierta',
+      callType: ApiCallType.GET,
+      headers: {
+        'Tennant': '${tennantToken}',
+        'Authorization': 'Bearer ${bearerToken}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class VentaCreateOrdenCall {
+  static Future<ApiCallResponse> call({
+    String? host = '',
+    String? tennantToken = '',
+    String? bearerToken = '',
+    int? id,
+    String? idMesa = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'ventaCreateOrden',
+      apiUrl:
+          'http://${host}/jobits/pos/venta/${id}/create-new-orden/${idMesa}',
+      callType: ApiCallType.POST,
+      headers: {
+        'Tennant': '${tennantToken}',
+        'Authorization': 'Bearer ${bearerToken}',
+      },
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class OrdenFindCall {
+  static Future<ApiCallResponse> call({
+    String? host = '',
+    String? tennantToken = '',
+    String? bearerToken = '',
+    String? codOrden = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'ordenFind',
+      apiUrl: 'http://${host}/jobits/pos/orden/find/${codOrden}',
       callType: ApiCallType.GET,
       headers: {
         'Tennant': '${tennantToken}',

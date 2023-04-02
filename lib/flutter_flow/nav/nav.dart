@@ -38,7 +38,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, _) => LoginPageWidget(),
         ),
         FFRoute(
-          name: 'login_page',
+          name: 'loginPage',
           path: '/loginPage',
           builder: (context, params) => LoginPageWidget(),
         ),
@@ -57,6 +57,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/tableStatus',
           builder: (context, params) => TableStatusWidget(
             areaSelected: params.getParam('areaSelected', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'orderDetails',
+          path: '/orderDetails',
+          builder: (context, params) => OrderDetailsWidget(
+            numeroOrden: params.getParam('numeroOrden', ParamType.String),
+            orden: params.getParam('orden', ParamType.JSON),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

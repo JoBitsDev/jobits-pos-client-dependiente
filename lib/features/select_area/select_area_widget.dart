@@ -44,7 +44,7 @@ class _SelectAreaWidgetState extends State<SelectAreaWidget> {
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).lineColor,
+      backgroundColor: FlutterFlowTheme.of(context).tertiary,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primary,
         automaticallyImplyLeading: false,
@@ -78,11 +78,12 @@ class _SelectAreaWidgetState extends State<SelectAreaWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(5.0, 20.0, 5.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   FutureBuilder<ApiCallResponse>(
                     future: GetListaAreaVentaCall.call(
@@ -90,8 +91,8 @@ class _SelectAreaWidgetState extends State<SelectAreaWidget> {
                         FFAppState().ubicacion,
                         r'''$.host''',
                       ).toString(),
-                      tennantToken: FFAppState().tennantHeader,
-                      bearerToken: FFAppState().tokenHeader,
+                      tennantToken: FFAppState().tennantToken,
+                      bearerToken: FFAppState().bearerToken,
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
@@ -122,23 +123,48 @@ class _SelectAreaWidgetState extends State<SelectAreaWidget> {
                             itemCount: areas.length,
                             itemBuilder: (context, areasIndex) {
                               final areasItem = areas[areasIndex];
-                              return InkWell(
-                                onTap: () async {
-                                  context.pushNamed(
-                                    'tableStatus',
-                                    queryParams: {
-                                      'areaSelected': serializeParam(
-                                        areasItem.toString(),
-                                        ParamType.String,
-                                      ),
-                                    }.withoutNulls,
-                                  );
-                                },
-                                child: Text(
-                                  '',
-                                  textAlign: TextAlign.center,
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
+                              return Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    10.0, 10.0, 10.0, 10.0),
+                                child: Container(
+                                  width: 100.0,
+                                  height: 70.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    shape: BoxShape.rectangle,
+                                  ),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      context.pushNamed(
+                                        'tableStatus',
+                                        queryParams: {
+                                          'areaSelected': serializeParam(
+                                            areasItem.toString(),
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          areasItem.toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .headlineMedium,
+                                        ),
+                                        Icon(
+                                          Icons.navigate_next,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondary,
+                                          size: 24.0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               );
                             },

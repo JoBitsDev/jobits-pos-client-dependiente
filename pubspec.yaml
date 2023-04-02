@@ -27,9 +27,11 @@ dependencies:
     sdk: flutter
   auto_size_text: 3.0.0
   cached_network_image: 3.2.1
+  csv: 5.0.1
   equatable: 2.0.3
   flutter_animate: 1.0.0
   flutter_cache_manager: 3.3.0
+  flutter_secure_storage: 6.0.0
   flutter_spinkit: 5.1.0
   font_awesome_flutter: 10.1.0
   from_css_color: 2.0.0

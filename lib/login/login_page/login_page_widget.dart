@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -43,11 +44,20 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
           FFAppState().ubicacion,
           r'''$.id_base_datos''',
         ),
+        basicToken: functions.genereateBasicTokenFromUserAndPass(
+            getJsonField(
+              FFAppState().ubicacion,
+              r'''$.user''',
+            ).toString().toString(),
+            getJsonField(
+              FFAppState().ubicacion,
+              r'''$.password''',
+            ).toString().toString()),
       );
       if (!(_model.tennantResponse?.succeeded ?? true)) {
         setState(() {
           FFAppState().estadoConexion = 'Conectado';
-          FFAppState().tennantHeader = getJsonField(
+          FFAppState().tennantToken = getJsonField(
             (_model.tennantResponse?.jsonBody ?? ''),
             r'''$.token''',
           ).toString().toString();
@@ -363,15 +373,20 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               FFAppState().ubicacion,
                               r'''$.host''',
                             ).toString(),
-                            tennantToken: FFAppState().tennantHeader,
-                            basicToken: FFAppState().tokenHeader,
+                            tennantToken: FFAppState().tennantToken,
+                            basicToken:
+                                functions.genereateBasicTokenFromUserAndPass(
+                                    _model.emailAddressController.text,
+                                    _model.passwordController.text),
                           );
                           _shouldSetState = true;
                           if ((_model.apiResult5xm?.succeeded ?? true)) {
-                            FFAppState().tokenHeader = getJsonField(
+                            FFAppState().bearerToken = getJsonField(
                               (_model.apiResult5xm?.jsonBody ?? ''),
                               r'''$.Token''',
                             ).toString();
+                            FFAppState().loggedUser =
+                                _model.emailAddressController.text;
 
                             context.pushNamed('selectArea');
                           } else {
